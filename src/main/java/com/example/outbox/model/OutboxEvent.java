@@ -1,17 +1,17 @@
 package com.example.outbox.model;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.Id;
+import lombok.Setter;
+import org.hibernate.annotations.Immutable;
 import org.springframework.data.annotation.Version;
 
 import java.time.Instant;
@@ -21,11 +21,12 @@ import java.util.UUID;
  * Created by Sherif.Abdulraheem 3/8/2025 - 4:57 PM
  */
 @Entity
-@Table(name = "outbox_events", schema = "public")
-@Value
+@Table(name = "outbox_events")
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class OutboxEvent { // Configure and ensure binlog retention is not too short
 
     /**
@@ -34,9 +35,8 @@ public class OutboxEvent { // Configure and ensure binlog retention is not too s
      * Generated when creating a new event.
      */
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
+    @Column(name = "id", columnDefinition = "BINARY(16)", updatable = false, nullable = false)
     UUID id;
 
     @Column(name = "aggregate_type", nullable = false)
@@ -49,7 +49,7 @@ public class OutboxEvent { // Configure and ensure binlog retention is not too s
     String type;
 
     @Column(name = "payload")
-    JsonNode payload;
+    String payload;
 
     @Column(name = "timestamp", nullable = false, updatable = false)
     Instant timestamp;

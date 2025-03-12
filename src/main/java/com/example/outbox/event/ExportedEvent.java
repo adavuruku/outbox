@@ -1,7 +1,5 @@
 package com.example.outbox.event;
 
-import com.fasterxml.jackson.databind.JsonNode;
-
 import java.time.Instant;
 
 /**
@@ -49,5 +47,6 @@ public interface ExportedEvent {
     /**
      * The actual event payload as a valid JSON string.
      */
-    JsonNode getPayload();
+    String getPayload();
 }
+

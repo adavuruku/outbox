@@ -2,12 +2,13 @@ package com.example.outbox.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Value;
-import org.springframework.data.annotation.Id;
+import lombok.Setter;
 import org.springframework.data.annotation.Version;
 
 import java.time.Instant;
@@ -16,12 +17,14 @@ import java.util.UUID;
 /**
  * Created by Sherif.Abdulraheem 3/8/2025 - 4:56 PM
  */
-@Entity
+//@Entity
 @Table(name = "consumed_messages", schema = "public")
-@Value
+@Entity
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
-@NoArgsConstructor(force = true)
+@NoArgsConstructor
 public class ConsumedMessage {
 
     @Id
